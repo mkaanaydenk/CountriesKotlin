@@ -1,7 +1,7 @@
 package com.mehmetkaanaydenk.kotlincountries.service
 
 import com.mehmetkaanaydenk.kotlincountries.model.Country
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -18,7 +18,7 @@ class CountryAPIService {
         .create(CountryAPI::class.java)
 
 
-    fun getData(): Single<List<Country>>{
+    fun getData(): Single<List<Country>> {
 
         return api.getCountries()
 
