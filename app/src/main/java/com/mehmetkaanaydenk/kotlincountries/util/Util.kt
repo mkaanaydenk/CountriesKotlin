@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.mehmetkaanaydenk.kotlincountries.R
 
-fun ImageView.downloadFromUrl(url: String?, progressDrawable: CircularProgressDrawable){
+fun ImageView.downloadFromUrl(url: String?, progressDrawable: CircularProgressDrawable) {
 
     val options = RequestOptions()
         .placeholder(progressDrawable)
@@ -20,7 +20,7 @@ fun ImageView.downloadFromUrl(url: String?, progressDrawable: CircularProgressDr
 
 }
 
-fun placeholderProgressBar(context: Context) : CircularProgressDrawable {
+fun placeholderProgressBar(context: Context): CircularProgressDrawable {
     return CircularProgressDrawable(context).apply {
         strokeWidth = 8f
         centerRadius = 40f

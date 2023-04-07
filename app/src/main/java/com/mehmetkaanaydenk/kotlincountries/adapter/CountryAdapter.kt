@@ -35,12 +35,14 @@ class CountryAdapter(val countryList: ArrayList<Country>) :
         holder.countryBinding.region.text = countryList[position].countryRegion
         holder.itemView.setOnClickListener {
 
-            val action = FeedFragmentDirections.actionFeedFragmentToCountryFragment()
+            val action =
+                FeedFragmentDirections.actionFeedFragmentToCountryFragment(countryList[position].uuid)
             Navigation.findNavController(it).navigate(action)
 
         }
 
-        holder.countryBinding.imageView.downloadFromUrl(countryList[position].imageUrl,
+        holder.countryBinding.imageView.downloadFromUrl(
+            countryList[position].imageUrl,
             placeholderProgressBar(holder.itemView.context)
         )
 

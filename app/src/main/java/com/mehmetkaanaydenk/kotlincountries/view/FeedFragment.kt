@@ -15,7 +15,6 @@ import com.mehmetkaanaydenk.kotlincountries.databinding.FragmentFeedBinding
 import com.mehmetkaanaydenk.kotlincountries.viewmodel.FeedViewModel
 
 
-
 class FeedFragment : Fragment() {
 
 
@@ -23,7 +22,7 @@ class FeedFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var viewModel: FeedViewModel
-    private val countryAdapter= CountryAdapter(arrayListOf())
+    private val countryAdapter = CountryAdapter(arrayListOf())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +49,7 @@ class FeedFragment : Fragment() {
             binding.countryList.visibility = View.GONE
             binding.countryError.visibility = View.GONE
             binding.countryLoading.visibility = View.VISIBLE
-            viewModel.getDataFromApi()
+            viewModel.refreshFromApi()
             binding.swipeRefreshLayout.isRefreshing = false
         }
 
@@ -58,9 +57,9 @@ class FeedFragment : Fragment() {
 
     }
 
-    private fun observeLiveData(){
+    private fun observeLiveData() {
 
-        viewModel.countries.observe(viewLifecycleOwner, Observer {countries ->
+        viewModel.countries.observe(viewLifecycleOwner, Observer { countries ->
 
             countries?.let {
                 binding.countryList.visibility = View.VISIBLE
@@ -73,9 +72,9 @@ class FeedFragment : Fragment() {
 
             it?.let {
 
-                if (it){
+                if (it) {
                     binding.countryError.visibility = View.VISIBLE
-                }else{
+                } else {
                     binding.countryError.visibility = View.GONE
                 }
 
@@ -83,14 +82,14 @@ class FeedFragment : Fragment() {
 
         })
 
-        viewModel.countryLoading.observe(viewLifecycleOwner, Observer {loading ->
+        viewModel.countryLoading.observe(viewLifecycleOwner, Observer { loading ->
             loading?.let {
 
-                if (it){
+                if (it) {
                     binding.countryLoading.visibility = View.VISIBLE
                     binding.countryError.visibility = View.GONE
                     binding.countryList.visibility = View.GONE
-                }else{
+                } else {
                     binding.countryLoading.visibility = View.GONE
                 }
 

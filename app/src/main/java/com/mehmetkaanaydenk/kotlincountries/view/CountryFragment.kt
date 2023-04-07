@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import com.mehmetkaanaydenk.kotlincountries.R
 import com.mehmetkaanaydenk.kotlincountries.databinding.FragmentCountryBinding
+import com.mehmetkaanaydenk.kotlincountries.util.downloadFromUrl
+import com.mehmetkaanaydenk.kotlincountries.util.placeholderProgressBar
 import com.mehmetkaanaydenk.kotlincountries.viewmodel.CountryViewModel
 
 
@@ -38,26 +40,34 @@ class CountryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(CountryViewModel::class.java)
-        viewModel.refreshData()
         arguments?.let {
 
             countryUuid = CountryFragmentArgs.fromBundle(it).countryUuid
 
         }
+        viewModel.refreshData(countryUuid)
+
         observeLiveData()
     }
 
-    private fun observeLiveData(){
+    private fun observeLiveData() {
 
-        viewModel.country.observe(viewLifecycleOwner, Observer {
+        viewModel.countryLiveData.observe(viewLifecycleOwner, Observer { country ->
 
-            it?.let {
+            country?.let {
 
-                binding.name.text = it.countryName
-                binding.capital.text = it.countryCapital
-                binding.region.text = it.countryRegion
-                binding.currency.text = it.countryCurrency
-                binding.language.text = it.countryLanguage
+                binding.name.text = country.countryName
+                binding.capital.text = country.countryCapital
+                binding.region.text = country.countryRegion
+                binding.currency.text = country.countryCurrency
+                binding.language.text = country.countryLanguage
+                context?.let {
+                    binding.countryImage.downloadFromUrl(
+                        country.imageUrl,
+                        placeholderProgressBar(it)
+                    )
+                }
+
 
             }
 
